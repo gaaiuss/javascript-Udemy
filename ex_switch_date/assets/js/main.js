@@ -94,3 +94,14 @@ const fmtdDate = formatDate(date)
 
 
 dateElmt.innerHTML = fmtdDate
+
+// const h1 = document.querySelector('.date');
+// const date = new Date();
+// const options = {
+//     weekday: "long",
+//     year: "numeric",
+//     month: "long",
+//     day: "numeric",
+// };
+
+// h1.innerHTML = date.toLocaleDateString('en-UK', options);
