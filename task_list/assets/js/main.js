@@ -3,8 +3,8 @@ const btnTask = document.querySelector('.btn-task');
 const tasks = document.querySelector('.tasks');
 
 function createLi() {
-    const li = document.createElement('li')
-    return li
+    const li = document.createElement('li');
+    return li;
 }
 
 function createClearButton(btnText, li) {
@@ -18,7 +18,7 @@ function createClearButton(btnText, li) {
 
 function saveTask() {
     const taskLmt = tasks.querySelectorAll('li');
-    const taskList = []
+    const taskList = [];
 
     for (let task of taskLmt) {
         let taskText = task.innerText;
@@ -26,7 +26,7 @@ function saveTask() {
         taskList.push(taskText);
     }
     const taskJson = JSON.stringify(taskList);
-    localStorage.setItem('tasks', taskJson)
+    localStorage.setItem('tasks', taskJson);
 }
 
 function createTask(text) {
@@ -45,7 +45,7 @@ function clearInput(){
 
 function addSavedTasks() {
     const tasks = localStorage.getItem('tasks');
-    const taskList = JSON.parse(tasks)
+    const taskList = JSON.parse(tasks);
     
     for (let task of taskList) {
         createTask(task);
