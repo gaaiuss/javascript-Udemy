@@ -1,61 +1,47 @@
-function createCalc() {
-    return {
-        display: document.querySelector('.display'),
-        btnClear: document.querySelector('.btn-clear'),
-        start() {
-            this.clickBtn();
-            this.pressEnter();
-        },
-        clickBtn() {
-            document.addEventListener('click', e => {
-                const lmt = e.target;
-                if (lmt.classList.contains('btn-num')) {
-                    this.btnToDisplay(lmt.innerText);
-                }
-                if (lmt.classList.contains('btn-clear')) {
-                    this.clearDisplay();
-                }
-                if (lmt.classList.contains('btn-del')) {
-                    this.delOne();
-                }
-                if (lmt.classList.contains('btn-eq')) {
-                    this.calculate();
-                }
-            })
-        },
-        btnToDisplay(value) {
-            this.display.value += value;
-        },
-        clearDisplay() {
-            this.display.value = '';
-        },
-        delOne() {
-            this.display.value = this.display.value.slice(0, -1);
-        },
-        calculate() {
-            let equation = this.display.value;
-            try {
-                equation = eval(equation);
-                if(!equation) {
-                    alert('Invalid equation');
-                    return;
-                }
-                this.display.value = equation;
-            } catch (e) {
+function Calc() {
+    this.display = document.querySelector('.display');
+    this.start = () => {
+        this.captureClick();
+        this.captureEnter();
+    }
+    this.captureClick = () => {
+        document.addEventListener('click', e => {
+            const lmt = e.target;
+            if (lmt.classList.contains('btn-num')) this.addNumToDisplay(lmt);
+            if (lmt.classList.contains('btn-clear')) this.clear();
+            if (lmt.classList.contains('btn-del')) this.del();
+            if (lmt.classList.contains('btn-eq')) this.calculate(lmt);
+        })
+    };
+    this.addNumToDisplay = lmt => {
+        this.display.value += lmt.innerText;
+        this.display.focus();
+    }
+    this.clear = () => this.display.value = '';
+    this.del = () => this.display.value = this.display.value.slice(0, -1);
+    this.calculate = () => {
+        try {   
+            const equation = this.display.value;
+            if (!equation) {
                 alert('Invalid equation');
                 return;
             }
-        },
-        pressEnter() {
-            this.display.addEventListener('keypress', e => {
-                if (e.keyCode === 13) {
-                    this.calculate();
-                }
-            })
+            this.display.value = eval(equation);
+            return;
+        } catch(e) {
+            alert('Invalid equation');
+            return;
         }
-    }
+        return;
+    };
+    this.captureEnter = () => {
+        this.display.addEventListener('keypress', e => {
+            if (e.keyCode === 13) {
+                this.calculate();
+            }
+        });
+    };
 }
 
-
-const calc = createCalc();
+const calc = new Calc();
 calc.start();
